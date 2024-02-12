@@ -19,9 +19,9 @@ class UtilisateurController extends Controller
     }
      public function store(Request $request)
     {
-        $request->validate([
-            // Validation rules for your form fields...
-        ]);
+        // $request->validate([
+           
+        // ]);
 
         // Create a new Utilisateur instance
         $utilisateur = new Utilisateur();

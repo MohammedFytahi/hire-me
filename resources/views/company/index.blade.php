@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('company informations') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('company') }}">
                         @csrf
                 
                         <!-- Name -->
@@ -22,48 +22,45 @@
                 
                         <!-- Email Address -->
                         <div class="mt-4">
-                            <x-input-label for="image" :value="__('Company logo')" />
-                            <x-text-input id="image" class="block mt-1 w-full" type="file" name="image" :value="old('email')"
-                                required autocomplete="username" />
-                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            <x-input-label for="logo" :value="__('Company logo')" />
+                            <x-text-input id="logo" class="block mt-1 w-full" type="file" name="logo" :value="old('Logo')"
+                                required autocomplete="logo" />
+                            <x-input-error :messages="$errors->get('log')" class="mt-2" />
                         </div>
                 
                         <!-- Password -->
                         <div class="mt-4">
-                            <x-input-label for="password" :value="__('Password')" />
+                            <x-input-label for="slogan" :value="__('Slogan')" />
                 
-                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                                autocomplete="new-password" />
+                            <x-text-input id="slogan" class="block mt-1 w-full" type="text" name="slogan" required
+                                autocomplete="slogan" />
                 
-                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('slogan')" class="mt-2" />
                         </div>
                 
                         <!-- Confirm Password -->
                         <div class="mt-4">
-                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                            <x-input-label for="industry" :value="__('industry')" />
                 
-                            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
+                            <x-text-input id="industry" class="block mt-1 w-full" type="text"
+                                name="industry" required autocomplete="industry" />
                 
-                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('industry')" class="mt-2" />
                         </div>
                         <div class="mt-4">
-                            <select name="role">
+                            <x-input-label for="description" :value="__('description')" />
                 
-                                <option value="user">User</option>
+                            <x-text-input id="description" class="block mt-1 w-full" type="text"
+                                name="description" required autocomplete="description" />
                 
-                                <option value="entreprise">Entreprise</option>
-                            </select>
+                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
                 
                         <div class="flex items-center justify-end mt-4">
-                            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                href="{{ route('login') }}">
-                                {{ __('Already registered?') }}
-                            </a>
+                           
                 
                             <x-primary-button class="ms-4">
-                                {{ __('Register') }}
+                                {{ __('confirm') }}
                             </x-primary-button>
                         </div>
                     </form>

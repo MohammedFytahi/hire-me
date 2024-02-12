@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('job_offers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->foreignId('company_id')->nullable(); // Ajoutez 'company_id' comme colonne étrangère, autorisée à être nulle
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description');
             $table->text('required_skills');
@@ -22,6 +24,7 @@ return new class extends Migration
             $table->string('location');
             $table->timestamps();
         });
+        
     }
 
     /**

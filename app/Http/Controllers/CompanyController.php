@@ -56,4 +56,13 @@ class Companycontroller extends Controller
 
     return response()->json($entreprises);
 }
+
+public function destroy($id)
+{
+    $offre = Entreprise::findOrFail($id);
+    $offre->delete();
+
+    // Rediriger vers une page appropriée après la suppression
+    return redirect()->route('formcompany')->with('success', 'Offre supprimée avec succès!');
+}
 }

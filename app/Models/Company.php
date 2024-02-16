@@ -14,7 +14,7 @@ class Company extends Model
         'slogan',
         'industry',
         'description',
-        
+    
     ];
 
     public function jobOffers()

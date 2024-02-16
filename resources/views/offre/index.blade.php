@@ -1,53 +1,61 @@
 <x-app-layout>
 
-    
+
     <h1 class="text-center text-3xl font-semibold mb-8">Offres</h1>
 
     <div class="flex justify-center">
         <div class="max-w-3xl w-full">
             @foreach ($offres as $offre)
-            <div class="mb-8">
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/slides/198.jpg"
-                        class="mb-6 w-full rounded-lg shadow-lg" alt="image" />
+                <div class="mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/slides/198.jpg"
+                            class="mb-6 w-full rounded-lg shadow-lg" alt="image" />
 
-                    <div class="mb-6 flex items-center">
-                        <img src="{{ asset('storage/' . Auth::user()->image) }}" class="mr-2 h-8 rounded-full"
-                            alt="avatar" loading="lazy" />
-                        <div>
-                            <span class="text-gray-600">Publié le <u>{{ $offre->created_at }}</u> par </span>
-                            <a href="#!" class="font-semibold text-blue-500 hover:underline">{{ $offre->user?->name }}</a>
+                        <div class="mb-6 flex items-center">
+                            <img src="{{ asset('storage/' . Auth::user()->image) }}" class="mr-2 h-8 rounded-full"
+                                alt="avatar" loading="lazy" />
+                            <div>
+                                <span class="text-gray-600">Publié le <u>{{ $offre->created_at }}</u> par </span>
+                                <a href="#!"
+                                    class="font-semibold text-blue-500 hover:underline">{{ $offre->user?->name }}</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <h1 class="mb-6 text-3xl font-bold text-gray-900">
-                        {{ $offre->titre }}
-                    </h1>
+                        <h1 class="mb-6 text-3xl font-bold text-gray-900">
+                            {{ $offre->titre }}
+                        </h1>
 
-                    <p class="text-gray-800 mb-6">
-                        {{ Str::limit($offre->description, 100) }}
-                    </p>
+                        <p class="text-gray-800 mb-6">
+                            {{ Str::limit($offre->description, 100) }}
+                        </p>
 
-                    <div class="flex mb-4">
-                        <div class="mr-4">
-                            <strong class="text-gray-700">Compétences:</strong> {{ $offre->compétences_requises }}
+                        <div class="flex mb-4">
+                            <div class="mr-4">
+                                <strong class="text-gray-700">Compétences:</strong> {{ $offre->compétences_requises }}
+                            </div>
+                            <div class="mr-4">
+                                <strong class="text-gray-700">Localisation:</strong> {{ $offre->emplacement }}
+                            </div>
+                            <div>
+                                <strong class="text-gray-700">Type de contrat:</strong> {{ $offre->type_contrat }}
+                            </div>
                         </div>
-                        <div class="mr-4">
-                            <strong class="text-gray-700">Localisation:</strong> {{ $offre->emplacement }}
-                        </div>
-                        <div>
-                            <strong class="text-gray-700">Type de contrat:</strong> {{ $offre->type_contrat }}
-                        </div>
-                    </div>
 
-                    @if (!(Auth()->user()->entreprise))
+                        @if (Auth()->user()->role === 'user')
                             <div class="mt-6 text-right">
                                 <button class="border rounded bg-green-400 p-2 postuler-btn"
                                     data-offre-id="{{ $offre->id }}">Apply</button>
                             </div>
-                            @endif
+                        @endif
+                        @if (Auth()->user()->role === 'admin')
+                            <form action="{{ route('offres.destroy', $offre->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>
@@ -86,11 +94,29 @@
                         },
                     });
                 },
+                
                 error: function(xhr, status, error) {
                     // Gérer les erreurs de la demande Ajax si nécessaire
                     console.error(error);
                 }
             });
         }
+
+        
     </script>
+    <style>.my-custom-popup-class {
+        background-color: #f0f0f0;
+        border: 2px solid #ccc;
+    }
+    
+    .my-custom-title-class {
+        color: #ff0000;
+        font-size: 24px;
+    }
+    
+    .my-custom-content-class {
+        color: #00ff00;
+        font-size: 18px;
+    }
+    </style>
 </x-app-layout>

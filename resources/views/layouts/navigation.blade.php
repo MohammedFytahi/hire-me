@@ -12,7 +12,7 @@
                                 alt="Workflow">
                         </div>
                     </div>
-                    <div class="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
+                    {{-- <div class="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
                         <div class="w-full sm:max-w-xs">
                             <label for="search" class="sr-only">Search</label>
                             <div class="relative">
@@ -30,7 +30,7 @@
                                     placeholder="Search" type="search">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="relative z-10 flex items-center lg:hidden">
                         <!-- Mobile menu button -->
                         <button type="button"
@@ -103,12 +103,21 @@ Heroicon name: outline/x"
 
                     </div>
                 </div>
+
                 <nav class="hidden lg:py-2 lg:flex lg:space-x-8" aria-label="Global">
+                    @if(Auth()->user()->role === 'admin')
+                    <div class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+                        <x-nav-link :href="route('statistiques.index')" :active="request()->routeIs('statistiques.index')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    </div>
+                    @else
                     <div class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
+                    @endif
 
                     <a href="{{ route('show.company') }}"
                         class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"

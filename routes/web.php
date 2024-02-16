@@ -7,7 +7,10 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Companycontroller;
+use App\Http\Controllers\Offrecontroller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StatistiqueController;
+
 
 
 /*
@@ -44,20 +47,20 @@ Route::middleware('auth')->group(function () {
 
 
 
-  Route::post('/offre/store', [\App\Http\Controllers\Offrecontroller::class,'store'])->name('store.offre');
-  Route::get('/offre', [\App\Http\Controllers\Offrecontroller::class, 'index'])->name('formoffre');
-  Route::get('/offres', [\App\Http\Controllers\Offrecontroller::class, 'show'])->name('offres');
+  Route::post('/offre/store', [Offrecontroller::class,'store'])->name('store.offre');
+  Route::get('/offre', [Offrecontroller::class, 'index'])->name('formoffre');
+  Route::get('/offres', [Offrecontroller::class, 'show'])->name('offres');
   Route::get('/section', [UtilisateurController::class, 'showform'])->name('section.form');
   Route::post('/section', [UtilisateurController::class, 'store'])->name('section');
 
 
 
-  Route::post('postuler/{offreId}', [\App\Http\Controllers\Offrecontroller::class, 'postuler'])->name('postuler');
+  Route::post('postuler/{offreId}', [Offrecontroller::class, 'postuler'])->name('postuler');
 
   
-    Route::get('/cvform', [\App\Http\Controllers\Formcontroller::class, 'index'])->name('formCv');
-    Route::post('/store', [\App\Http\Controllers\Formcontroller::class, 'store'])->name('cv.store');
-    Route::get('/cv/cursus', [\App\Http\Controllers\Formcontroller::class, 'getUserCursus'])->name('getUserCursus');
+    Route::get('/cvform', [Formcontroller::class, 'index'])->name('formCv');
+    Route::post('/store', [Formcontroller::class, 'store'])->name('cv.store');
+    Route::get('/cv/cursus', [Formcontroller::class, 'getUserCursus'])->name('getUserCursus');
     Route::delete('/cursus/{id}', [Formcontroller::class, 'destroy'])->name('cursus.destroy');
 
 
@@ -78,7 +81,11 @@ Route::delete('/competence/{id}', [CompetenceController::class, 'destroy'])->nam
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generate.pdf');
 Route::get('/cv', [PDFController::class, 'index'])->name('cv');
+Route::delete('/offres/{offre}', [OffreController::class, 'destroy'])->name('offres.destroy');
+Route::delete('/company/{offre}', [Companycontroller::class, 'destroy'])->name('company.destroy');
 
+
+Route::get('/statistiques', [StatistiqueController::class, 'index'])->name('statistiques.index');
 
 });
 

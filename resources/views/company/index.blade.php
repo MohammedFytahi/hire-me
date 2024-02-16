@@ -24,12 +24,25 @@
                     <i class="fas fa-envelope text-blue-500"></i>
                     <p class="text-sm text-gray-700">{{ $entreprise->user->email }}</p>
                 </div>
-                <hr class="my-4 border-blue-300">
+                
+                <hr class="my-4 border-blue-300">@if (Auth()->user()->role === 'user')
                 <div class="flex justify-center">
+
                     <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Subscribe</button>
                 </div>
-                <a href="#" class="block text-blue-500 mt-4 hover:underline text-center">En savoir plus</a>
+                <a href="#" class="block text-blue-500 mt-4 hover:underline text-center">En savoir plus</a>@endif
+                <div class="flex justify-center">
+                    @if (Auth()->user()->role === 'admin')
+                    
+                            <form action="{{ route('company.destroy', $entreprise->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Supprimer</button>
+                            </form>
+                        @endif
+                </div>
             </div>
+            
         @endforeach
     </div>
 

@@ -17,7 +17,7 @@ return view('dashboard');
 elseif($role == 'entreprise')
     return view('company.form');
     elseif ($role == 'admin')
-        return view('admin.admin ');
+        return view('dashboard ');
 }
     }
 }

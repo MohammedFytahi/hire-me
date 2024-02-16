@@ -1,71 +1,52 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('company informations') }}
-        </h2>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('company') }}">
-                        @csrf
-                
-                        <!-- Name -->
-                        <div>
-                            <x-input-label for="name" :value="__('Company name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                                autofocus autocomplete="name" />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                        </div>
-                
-                        <!-- Email Address -->
-                        <div class="mt-4">
-                            <x-input-label for="logo" :value="__('Company logo')" />
-                            <x-text-input id="logo" class="block mt-1 w-full" type="file" name="logo" :value="old('Logo')"
-                                required autocomplete="logo" />
-                            <x-input-error :messages="$errors->get('log')" class="mt-2" />
-                        </div>
-                
-                        <!-- Password -->
-                        <div class="mt-4">
-                            <x-input-label for="slogan" :value="__('Slogan')" />
-                
-                            <x-text-input id="slogan" class="block mt-1 w-full" type="text" name="slogan" required
-                                autocomplete="slogan" />
-                
-                            <x-input-error :messages="$errors->get('slogan')" class="mt-2" />
-                        </div>
-                
-                        <!-- Confirm Password -->
-                        <div class="mt-4">
-                            <x-input-label for="industry" :value="__('industry')" />
-                
-                            <x-text-input id="industry" class="block mt-1 w-full" type="text"
-                                name="industry" required autocomplete="industry" />
-                
-                            <x-input-error :messages="$errors->get('industry')" class="mt-2" />
-                        </div>
-                        <div class="mt-4">
-                            <x-input-label for="description" :value="__('description')" />
-                
-                            <x-text-input id="description" class="block mt-1 w-full" type="text"
-                                name="description" required autocomplete="description" />
-                
-                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
-                        </div>
-                
-                        <div class="flex items-center justify-end mt-4">
-                           
-                
-                            <x-primary-button class="ms-4">
-                                {{ __('confirm') }}
-                            </x-primary-button>
-                        </div>
-                    </form>
+    <input type="text" id="searchInput" placeholder="Recherche...">
+    <div id="searchResults"></div>
+
+    <h1 class="text-center text-4xl font-bold text-blue-900 mb-8">Explorez les entreprises</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="entrepriseContainer">
+        @foreach ($entreprises as $entreprise)
+            <div class="entreprise-card bg-white shadow-md rounded-md p-6" data-nom="{{ $entreprise->nom }}">
+                <div class="flex justify-center mb-4">
+                    <img src="{{ asset('storage/' . $entreprise->logo) }}" alt="Logo"
+                        class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-blue-500">
                 </div>
+                <div class="text-center mb-4">
+                    <h2 class="text-lg font-semibold text-blue-900">{{ $entreprise->nom }}</h2>
+                    <p class="text-sm text-gray-600">{{ $entreprise->slogan }}</p>
+                </div>
+                <div class="text-center mb-4">
+                    <i class="fas fa-user text-blue-500"></i>
+                    <p class="text-sm text-gray-700">{{ $entreprise->user->name }}</p>
+                </div>
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope text-blue-500"></i>
+                    <p class="text-sm text-gray-700">{{ $entreprise->user->email }}</p>
+                </div>
+                <hr class="my-4 border-blue-300">
+                <div class="flex justify-center">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Subscribe</button>
+                </div>
+                <a href="#" class="block text-blue-500 mt-4 hover:underline text-center">En savoir plus</a>
             </div>
-        </div>
+        @endforeach
     </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var searchTerm = this.value.trim().toLowerCase();
+            var entrepriseCards = document.querySelectorAll('.entreprise-card');
+
+            entrepriseCards.forEach(function(card) {
+                var nom = card.getAttribute('data-nom').toLowerCase();
+                if (nom.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
 </x-app-layout>

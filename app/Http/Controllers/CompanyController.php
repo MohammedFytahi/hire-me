@@ -2,89 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Entreprise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
-use App\Models\Company;
 
-
-class CompanyController extends Controller
+class Companycontroller extends Controller
 {
-    public function showform(): View
-    {
-        
-        return view('company.index');
+  
+    public function index(){
+        return view('company.form');
     }
-
-    // public function store(Request $request)
-    // {
-       
-    //     // Vérifiez si un fichier logo a été téléchargé
-      
-           
-      
-    //     $logo = $request->file('logo');
-    //     $logopath = $logo->store('images', 'public');
-    
-    //     // Créer une nouvelle instance de la classe Company
-    //     $company = new Company();
-    
-    //     // Assignez les autres attributs à partir de la requête
-    //     $company->name = $request->name;
-    //     $company->logo = $logopath;
-    //     $company->slogan = $request->slogan;
-    //     $company->industry = $request->industry;
-    //     $company->description = $request->description;
-      
-    //     // Enregistrez la société
-    //     $company->save();
-        
-    
-    //     // Rediriger ou renvoyer une réponse
-    //     return redirect()->back()->with('success', 'Company created successfully!');
-    // }
-    
-
-
-
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+ 
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'slogan' => 'required|string|max:255',
+            'industry' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+        ]);
+
+ 
+        $logoPath = $request->file('logo')->store('images','public');
+
+  
+        $entreprise = new Entreprise();
+        $entreprise->user_id=Auth()->user()->id;
+        $entreprise->nom = $validatedData['name'];
+        $entreprise->logo = $logoPath;
+        $entreprise->slogan = $validatedData['slogan'];
+        $entreprise->industrie= $validatedData['industry'];
+        $entreprise->description = $validatedData['description'];
+        $entreprise->save();
+
+        $user = Auth::user();
+        $user->role = 'entreprise';
+        $user->save();
+
    
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'logo' => ['required', 'image', 'mimes:png,svg,jpg,jpeg', 'max:10240'],
-            'slogan' => ['required', 'string', 'max:255'],
-            'industry' => 'required',
-            'description' => 'required',
-            
-        ]);
-    
-       
-        $logo = $request->file('logo');
-        
-        
-        $logoPath =$logo->store('logos', 'public');
-    
-        $user = Company::create([
-            'name' => $request->name,
-            'logo' => $request->logo,
-            'slogan' => $request->slogan,
-            'industry' => $request->role,
-            'description' => $logoPath, 
-        ]);
-    
-      
-    
-       
-    
         return redirect()->back()->with('success', 'Company created successfully!');
     }
+    public function show (){
+        $entreprises=Entreprise::all();
+        return view('company.index',compact('entreprises'));
+    }
 
+    public function search(Request $request)
+{
+    $searchTerm = $request->input('searchTerm');
+
+    $entreprises = Entreprise::where('nom', 'LIKE', "%{$searchTerm}%")->get();
+
+    return response()->json($entreprises);
+}
 }

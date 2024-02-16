@@ -17,10 +17,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased max-w-screen">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
-
+      
         <!-- Page Heading -->
         @if (isset($header))
             <header class="bg-white dark:bg-gray-800 shadow">
@@ -30,13 +29,13 @@
             </header>
         @endif
 
-        <a href="{{ route('generate.pdf') }}">Download PDF</a>
+        
         <a href="{{ route('cv') }}">view PDF</a>
         <div id="cursusList" class="m-4 w-full"></div>
         <!-- Page Content -->
         <main>
             <form id="cvForm"
-                class="m-4 p-6 border rounded-md bg-gray-300 transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
+                class="m-4 p-6 border rounded-md bg-gray-100 transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
                 @csrf
                 <h1 class="text-black   font-bold rounded-lg text-center m-4">+ ADD CURSUS </h1>
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -70,7 +69,7 @@
                     </div>
                 </div>
                 <button type="button" id="submitBtn"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                    class="text-white bg-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </form>
         </main>
     </div>
@@ -78,7 +77,7 @@
 
     <div id="experienceList" class="m-4 w-full"></div>
     <form id="experienceForm"
-        class="m-4 p-6 border bg-gray-300 rounded-md transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
+        class="m-4 p-6 border bg-gray-100 rounded-md transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
         @csrf
 
         <h1 class="text-black   font-bold rounded-lg text-center m-4">+ ADD Experience </h1>
@@ -113,14 +112,14 @@
             </div>
         </div>
         <button type="button" id="submitExperienceBtn"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            class="text-white bg-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 
 
     <div id="languageList" class=" m-4 w-full"></div>
 
     <form id="languageForm"
-        class="m-4 p-6 border bg-gray-300 rounded-md transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
+        class="m-4 p-6 border bg-gray-100 rounded-md transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
         @csrf
 
         <h1 class="text-black   font-bold rounded-lg text-center m-4">+ ADD Language </h1>
@@ -147,13 +146,13 @@
             </div>
         </div>
         <button type="button" id="submitLanguageBtn"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            class="text-white bg-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 <div id="competenceList" class="m-4 w-full"></div>
 
     <form id="competenceForm"
 
-    class="m-4 p-6 border bg-gray-300 rounded-md transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
+    class="m-4 p-6 border bg-gray-100 rounded-md transition duration-300 ease-in-out border-gray-300 hover:border-blue-500">
       
         @csrf
         <div>
@@ -164,7 +163,7 @@
                 placeholder="Competence Name" required>
         </div>
         <button type="button" id="submitCompetenceBtn"
-            class="text-white m-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            class="text-white m-2 bg-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 
 

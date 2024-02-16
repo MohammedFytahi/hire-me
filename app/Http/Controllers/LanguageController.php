@@ -21,7 +21,7 @@ class LanguageController extends Controller
 
         // Create a new language instance
         $language = new Language();
-        $language->cv_id = $cv->id; 
+        $language->cv_id = $cv->id; // Assuming you have the user_id column in your languages table
         $language->language = $validatedData['language'];
         $language->proficiency = $validatedData['proficiency'];
         $language->save();

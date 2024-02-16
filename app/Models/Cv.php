@@ -35,5 +35,3 @@ class Cv extends Model
     }
 }
 
-
-

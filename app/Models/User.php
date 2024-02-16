@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-use App\Models\Utilisateur;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,14 +23,6 @@ class User extends Authenticatable
         'password',
         'role',
         'image',
-        // 'titre',
-        // 'poste_actuel',
-        // 'industrie',
-        // 'adresse',
-        // 'telephone',
-        // 'autre_contact',
-        // 'a_propos',
-        // 'cv',
     ];
 
     /**
@@ -54,9 +45,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function utilisateur()
-{
-    return $this->hasOne(Utilisateur::class);
-}
-
+    public function entreprise()
+    {
+        return $this->hasOne(Entreprise::class);
+    }
+    // Dans le modèle User.php
+    public function offres()
+    {
+        return $this->belongsToMany(Offre::class);
+    }
 }

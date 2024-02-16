@@ -16,6 +16,13 @@ class JobOfferController extends Controller
         return view('job_offers.create', compact('jobs'));
     }
     
+    public function show()
+    {
+        $jobs = JobOffer::with('company')->get();
+        
+        // Pass the $jobs variable to the view
+        return view('job_offers.index', compact('jobs'));
+    }
 
     public function store(Request $request)
     {

@@ -1,11 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    
 
-    <div class="py-1 w-646 items-center">
+    <div class=" w-646 items-center max-w-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="container lg:w-full xl:w-full sm:w-full md:w-2/3 bg-white shadow-lg transform duration-200 easy-in-out">
@@ -17,7 +13,7 @@
                     </div>
                     <div>
                         <div class="text-center px-14">
-                            <h2 class="text-gray-800 text-3xl font-bold">{{ Auth::user()->name }}</h2>
+                           <h2 class="text-gray-800 text-3xl font-bold">{{ Auth::user()->name }}</h2>
                             <a class="text-gray-400 my-8 hover:text-blue-500 block" href="https://www.instagram.com/immohitdhiman/" target="_blank">{{ Auth::user()->email }}</a>
                             @if(!Auth::user()->utilisateur) <!-- Check if utilisateur record exists for the user -->
                                 <a href="{{ route('section') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 my-6 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add profile section</a>
@@ -55,4 +51,9 @@
             </div>
         </div>
     </div>
+    @if (Auth()->user()->role === 'user')
+    @include('cv.cv_form')
+    @endif
+
+    
 </x-app-layout>
